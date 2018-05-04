@@ -15,6 +15,13 @@ if ( NOT TARGET Cinder-MIDI2 )
 	)
 
 	add_library( Cinder-MIDI2 ${CINDER_MIDI2_SOURCES} )
+
+	if( APPLE )
+		find_library( COREMIDI_FRAMEWORK CoreMIDI REQUIRED )
+		add_definitions( -DCINDER_MAC )
+		target_link_libraries( Cinder-MIDI2 PUBLIC ${COREMIDI_FRAMEWORK} )
+	endif()
+
 	target_compile_options( Cinder-MIDI2 PUBLIC "-std=c++11" )
 
 	target_include_directories( Cinder-MIDI2 PUBLIC "${CINDER_MIDI2_INCLUDES}" )
